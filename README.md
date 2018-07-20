@@ -29,3 +29,4 @@ Uses feedparser to display it. I get my news from reddit, but you can change the
 
     pip install feedparser
     
+Further changes will be made to this project and hopefully I will make it better.
