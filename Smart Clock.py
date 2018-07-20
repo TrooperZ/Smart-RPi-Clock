@@ -111,9 +111,9 @@ class SmartClock(tk.Tk):
      self.date.after(1000, self.date_tick)
     
     def weather(self):
-     self.api_key = "7d2799c0e7843bf0240de90ee67a993d"
-     self.lat = 29.7662188
-     self.lng = -95.6283055
+     self.api_key = "Your API key"
+     self.lat = Your latitude
+     self.lng = Your longitude
      self.degree_sign= u'\N{DEGREE SIGN}' 
      self.forecast = forecastio.load_forecast(self.api_key, self.lat, self.lng)
      self.r = self.forecast.currently()
