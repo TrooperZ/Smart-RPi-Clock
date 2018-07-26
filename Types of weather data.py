@@ -38,4 +38,3 @@ print cur.cloudCover
 print cur.uvIndex
 print cur.visibility
 print cur.ozone
-basic_formatted()
