@@ -1,8 +1,21 @@
 # Smart-RPi-Clock
 A smart clock for the Raspberry Pi and can be run on Windows. Shows weather, date, time, and news. Runs from Python 2.7 to 3.4.
 
+## UPDATE
+v2! Woohoo!
+
+What's new:
+
+- Easy customize variables (fonts, text, background, etc.)
+- Removed background from icons
+- Added black icons
+- Added RSS feed updating
+
 ## Hardware
 I recommend using a fairly good screen, HDMI, 10 inches or more, WiFi, and a good power cable for your RPi.
+
+## Before you start
+Know that to leave is Ctrl+F6.
 
 ## Weather
 
