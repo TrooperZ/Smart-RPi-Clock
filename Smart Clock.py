@@ -39,9 +39,9 @@ from PIL import Image, ImageTk #pip or pip3 install Pillow (sudo for Linux, Admi
 ##########Positioning, fonts, sizing##########
 
 #Weather API
-Set_API = "7d2799c0e7843bf0240de90ee67a993d"
-Set_lat = 29.7662188
-Set_long = -95.6283055
+Set_API = "Your API Key"
+Set_lat = Your Latitude
+Set_long = Your Longitude
 units = "F" #use "C" if latitude and longitude is not in the US
 
 #General 
