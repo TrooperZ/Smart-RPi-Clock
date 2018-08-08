@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
+
+__author__ = "Amin Karic"
+
 '''
 Smart Clock v.2.0.1
 Created By: Amin Karic
@@ -15,8 +18,10 @@ to your liking.
 
 
 NEW:
+Fixed forecastio glitch
 Fixed Pillow issue for Linux/Raspberry Pi (see README.md)
 Removed redundant code
+Reformatted code
 
 '''
 
@@ -34,9 +39,10 @@ from PIL import Image, ImageTk #pip or pip3 install Pillow (sudo for Linux, Admi
 ##########Positioning, fonts, sizing##########
 
 #Weather API
-Set_API = "Your API Key"
-Set_lat = Your latitude
-Set_long = Your longitude
+Set_API = "7d2799c0e7843bf0240de90ee67a993d"
+Set_lat = 29.7662188
+Set_long = -95.6283055
+units = "F" #use "C" if latitude and longitude is not in the US
 
 #General 
 screen_bg = 'black' #Background
@@ -131,15 +137,11 @@ news_textLimit = 750
 
 ##########Positioning, fonts, sizing##########
 
+
 class SmartClock(tk.Tk):
     
     def __init__(self):
         tk.Tk.__init__(self)
-        self.news = None #This is for the news updating. It creates an empty variable that will be modified later.
-        self.post_list = None
-        self.icon_lookup = icon_setup
-        self.time1 = None #For time updating. Same as above news updating.
-        self.date1 = None
         self.iconLbl = tk.Label(self, bg=screen_bg)
         self.iconLbl.pack()
         self.iconLbl.place(x=icn_x, y=icn_y)
@@ -175,70 +177,60 @@ class SmartClock(tk.Tk):
         self.weather()
         
     def GetRSS(self):
-        self.news = feedparser.parse(News_Link)
-        self.post_list = cycle(self.news.entries)
+        global post_list
+        news = feedparser.parse(News_Link)
+        post_list = cycle(news.entries)
         self.after(300000, self.GetRSS) #every 5 minutes
 
 
     def rssfeeds(self):
-        self.post = next(self.post_list)
-        self.RSSFEED = self.post.title
-        self.modTXT = 'News:  ' + self.RSSFEED
-        self.label_rss.config(text=self.modTXT)
+        post = next(post_list)
+        RSSFEED = post.title
+        modTXT = 'News:  ' + RSSFEED
+        self.label_rss.config(text=modTXT)
         self.after(10000, self.rssfeeds)
 
 
     def tick(self):
-     global time1
-     self.time2 = strftime("%H:%M:%S")
-     if self.time2 != self.time1:
-      self. time1 = self.time2
-      self.clock.config(text=self.time2)
+     time2 = strftime("%H:%M:%S")
+     self.clock.config(text=time2)
      self.clock.after(1000, self.tick)
 
     def date_tick(self):
-     global date1
-     self.date2 = strftime('''%A,
+     date2 = strftime('''%A,
 %B %d, %Y''')
-     if self.date2 != self.date1:
-      self.date1 = self.date2
-      self.date.config(text=self.date2)
+     self.date.config(text=date2)
      self.date.after(1000, self.date_tick)
     
     def weather(self):
-     self.api_key = Set_API
-     self.lat = Set_lat
-     self.lng = Set_long
-     self.degree_sign= u'\N{DEGREE SIGN}' 
-     self.forecast = forecastio.load_forecast(self.api_key, self.lat, self.lng)
-     self.r = self.forecast.currently()
-     self.icon_id = self.r.icon
-     self.icon2 = None
-     self.icon = ''
-     if self.icon_id in icon_setup:
-         self.icon2 = icon_setup[self.icon_id]
-         if self.icon2 is not None:
-                if self.icon != self.icon2:
-                    self.icon = self.icon2
-                    self.image = Image.open(self.icon2)
-                    self.image = self.image.resize((100, 100),  Image.ANTIALIAS)
-                    self.image = self.image.convert('RGBA')
-                    self.photo = ImageTk.PhotoImage(self.image)
-                    self.iconLbl.config(image=self.photo)
-                    self.iconLbl.image = self.photo
+     degree_sign= u'\N{DEGREE SIGN}' 
+     forecast = forecastio.load_forecast(Set_API, Set_lat, Set_long)
+     current_f = forecast.currently()
+     icon_id = current_f.icon
+     icon2 = None
+     icon = ''
+     if icon_id in icon_setup:
+         icon2 = icon_setup[icon_id]
+         if icon2 is not None:
+                if icon != icon2:
+                    icon = icon2
+                    image = Image.open(icon2)
+                    image = image.resize((100, 100),  Image.ANTIALIAS)
+                    image = image.convert('RGBA')
+                    photo = ImageTk.PhotoImage(image)
+                    self.iconLbl.config(image=photo)
+                    self.iconLbl.image = photo
          else:
                     self.iconLbl.config(image='')
-     self.temp = str(int(round(self.r.temperature))) + "F" + self.degree_sign
-     self.templbl.config(text=self.temp)
-     self.sumr = self.r.summary
-     self.summlbl.config(text=self.sumr)
-     self.feeltemp = "Feels Like: " + str(int(round(self.r.apparentTemperature))) + "F" + self.degree_sign
-     self.feel.config(text=self.feeltemp)
-     self.precipprb = "Chances of rain: " + str(self.r.precipProbability) + "%"
-     self.precipprob.config(text=self.precipprb)
+     temp = str(int(round(current_f.temperature))) + units + degree_sign
+     self.templbl.config(text=temp)
+     sumr = current_f.summary
+     self.summlbl.config(text=sumr)
+     feeltemp = "Feels Like: " + str(int(round(current_f.apparentTemperature))) + units + degree_sign
+     self.feel.config(text=feeltemp)
+     precipprb = "Chances of rain: " + str(current_f.precipProbability) + "%"
+     self.precipprob.config(text=precipprb)
      self.after(300000, self.weather) #every 5 minutes
 
 app = SmartClock()
 app.mainloop()
-
-###End of App. Do not put any code below this line. It will not run.###
