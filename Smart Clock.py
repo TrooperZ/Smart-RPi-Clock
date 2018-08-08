@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
 '''
-Smart Clock v.2
+Smart Clock v.2.0.1
 Created By: Amin Karic
-245 lines of code. Phewh!
+
 
 This program uses Python 2.7 to 3.4 because of feedparser. For 3.4, change
 Tkinter to tkinter.
@@ -12,11 +12,11 @@ Please customize the variables for postion, fonts, and size below
 to your liking.
 
 
+
+
 NEW:
-Easy customize variables
-Removed background from icons
-Added black icons
-Added RSS feed updating
+Fixed Pillow issue for Linux/Raspberry Pi (see README.md)
+Removed redundant code
 
 '''
 
@@ -215,8 +215,8 @@ class SmartClock(tk.Tk):
      self.icon_id = self.r.icon
      self.icon2 = None
      self.icon = ''
-     if self.icon_id in self.icon_lookup:
-         self.icon2 = self.icon_lookup[self.icon_id]
+     if self.icon_id in icon_setup:
+         self.icon2 = icon_setup[self.icon_id]
          if self.icon2 is not None:
                 if self.icon != self.icon2:
                     self.icon = self.icon2
