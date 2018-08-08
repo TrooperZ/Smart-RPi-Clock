@@ -2,7 +2,18 @@
 A smart clock for the Raspberry Pi and can be run on Windows. Shows weather, date, time, and news. Runs from Python 2.7 to 3.4.
 
 ## UPDATE
-v2! Woohoo!
+### v2.0.1
+You have to install the ImageTk package seperatly if you are running it on a Raspberry Pi or Linux
+
+For Raspberry Pi and Linux:
+
+    sudo apt-get install python-imaging python-imaging-tk
+    
+Windows: It comes with Pillow, so you don't need to worry.
+
+### v2!
+
+Woohoo!
 
 What's new:
 
