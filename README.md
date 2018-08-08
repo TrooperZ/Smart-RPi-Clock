@@ -8,8 +8,17 @@ You have to install the ImageTk package seperatly if you are running it on a Ras
 For Raspberry Pi and Linux:
 
     sudo apt-get install python-imaging python-imaging-tk
+   
+Python 3:
+
+    sudo apt-get install python3-pil python3-pil.imagetk
     
 Windows: It comes with Pillow, so you don't need to worry.
+
+What's New:
+
+- Fixed ImageTk glich
+- Removed Redundant code
 
 ### v2!
 
