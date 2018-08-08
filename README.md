@@ -43,7 +43,7 @@ Know that to leave is Ctrl+F6.
 
 You need to get your own API key <a href="www.darksky.net/dev">here</a> and get your longitude and latitude on Google Maps. Also, pip install the forcastio DarkSky wrapper using sudo(linux/RPi) or admin console(windows):
 
-    pip install python-forcastio
+    pip install python-forecastio
     
 Use the "Types of weather data.py" to see all the avalible data points. The 12 icons are also included with a license. To display them, you need Pillow (PIL).
 
