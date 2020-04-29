@@ -1,11 +1,8 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
 
-__author__ = "Amin Karic"
-
 '''
 Smart Clock v.2.0.1
-Created By: Amin Karic
 
 
 This program uses Python 2.7 to 3.4 because of feedparser. For 3.4, change
